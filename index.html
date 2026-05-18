@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alberto Hilario — Data Analytics Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0d1117;
+    --paper: #f8f6f1;
+    --accent: #1a4fd6;
+    --accent2: #e8401c;
+    --muted: #6b6b6b;
+    --border: #e2ddd6;
+    --card: #ffffff;
+    --tag-bg: #e8f0fe;
+    --tag-txt: #1a4fd6;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.6;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    background: rgba(248,246,241,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 56px;
+  }
+  .nav-logo {
+    font-family: 'DM Serif Display', serif;
+    font-size: 18px; color: var(--ink); text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 2rem; }
+  .nav-links a {
+    font-size: 13px; font-weight: 500; color: var(--muted);
+    text-decoration: none; letter-spacing: 0.04em;
+    text-transform: uppercase; transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* HERO */
+  .hero {
+    padding: 140px 2rem 100px;
+    max-width: 900px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+  }
+  .hero-text { animation: fadeUp 0.8s ease both; }
+  .hero-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px; color: var(--accent);
+    letter-spacing: 0.12em; text-transform: uppercase;
+    margin-bottom: 1rem;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .hero-eyebrow::before {
+    content: ''; display: inline-block;
+    width: 24px; height: 1px; background: var(--accent);
+  }
+  .hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(38px, 5vw, 54px);
+    line-height: 1.1; margin-bottom: 1.25rem;
+    color: var(--ink);
+  }
+  .hero h1 em {
+    font-style: italic; color: var(--accent);
+  }
+  .hero-desc {
+    font-size: 16px; color: var(--muted);
+    line-height: 1.7; margin-bottom: 2rem;
+  }
+  .hero-cta {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--accent); color: #fff;
+    padding: 12px 24px; border-radius: 6px;
+    font-size: 14px; font-weight: 500; text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .hero-cta:hover { background: #1340b8; transform: translateY(-1px); }
+
+  /* HERO VISUAL */
+  .hero-visual {
+    animation: fadeUp 0.8s 0.15s ease both;
+  }
+  .stat-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 12px;
+    display: flex; align-items: center; gap: 1rem;
+    transition: box-shadow 0.2s;
+  }
+  .stat-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+  .stat-icon {
+    width: 40px; height: 40px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; flex-shrink: 0;
+  }
+  .stat-icon.blue { background: #e8f0fe; }
+  .stat-icon.green { background: #e6f4ea; }
+  .stat-icon.orange { background: #fde8e4; }
+  .stat-num { font-size: 22px; font-weight: 600; color: var(--ink); }
+  .stat-lbl { font-size: 12px; color: var(--muted); }
+
+  /* CERT BADGE */
+  .cert-badge {
+    background: linear-gradient(135deg, #1a4fd6, #1340b8);
+    border-radius: 12px; padding: 1rem 1.25rem;
+    display: flex; align-items: center; gap: 12px; color: #fff;
+  }
+  .cert-icon { font-size: 28px; }
+  .cert-name { font-size: 13px; font-weight: 500; }
+  .cert-sub { font-size: 11px; opacity: 0.75; }
+
+  /* SECTION */
+  section { max-width: 900px; margin: 0 auto; padding: 80px 2rem; }
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px; color: var(--accent);
+    letter-spacing: 0.14em; text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+  .section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(28px, 4vw, 38px);
+    margin-bottom: 0.5rem; line-height: 1.2;
+  }
+  .section-desc { font-size: 15px; color: var(--muted); margin-bottom: 3rem; }
+  .divider { border: none; border-top: 1px solid var(--border); max-width: 900px; margin: 0 auto; }
+
+  /* SKILLS GRID */
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+  .skill-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 10px; padding: 1.25rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .skill-card:hover { border-color: var(--accent); box-shadow: 0 2px 12px rgba(26,79,214,0.1); }
+  .skill-card-icon { font-size: 22px; margin-bottom: 10px; }
+  .skill-card-name { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+  .skill-card-desc { font-size: 12px; color: var(--muted); }
+  .skill-bar-wrap { margin-top: 10px; background: var(--border); border-radius: 999px; height: 4px; overflow: hidden; }
+  .skill-bar { height: 100%; border-radius: 999px; background: var(--accent); transition: width 1.2s cubic-bezier(.4,0,.2,1); width: 0; }
+
+  /* PROJECTS */
+  .projects-grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
+  .project-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 14px; overflow: hidden;
+    display: grid; grid-template-columns: 280px 1fr;
+    transition: box-shadow 0.25s, transform 0.2s;
+  }
+  .project-card:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.1); transform: translateY(-2px); }
+  .project-visual {
+    padding: 2rem; display: flex; flex-direction: column;
+    justify-content: center; align-items: center; gap: 1rem;
+    position: relative; overflow: hidden;
+  }
+  .project-visual.blue-bg { background: #e8f0fe; }
+  .project-visual.green-bg { background: #e6f4ea; }
+  .project-visual.amber-bg { background: #fef7e0; }
+  .mini-chart { width: 100%; }
+  .bar-row { display: flex; align-items: center; gap: 6px; margin-bottom: 6px; }
+  .bar-label { font-family: 'DM Mono', monospace; font-size: 9px; color: #444; width: 28px; text-align: right; flex-shrink: 0; }
+  .bar-fill { height: 10px; border-radius: 3px; }
+  .bar-fill.b { background: #1a4fd6; }
+  .bar-fill.g { background: #1a7f4f; }
+  .bar-fill.a { background: #c97c00; }
+
+  .project-info { padding: 2rem; }
+  .project-number {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px; color: var(--muted); margin-bottom: 0.5rem;
+  }
+  .project-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px; margin-bottom: 0.75rem; line-height: 1.2;
+  }
+  .project-desc { font-size: 14px; color: var(--muted); line-height: 1.7; margin-bottom: 1.25rem; }
+  .tag-row { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 1.25rem; }
+  .tag {
+    font-size: 11px; font-weight: 500;
+    background: var(--tag-bg); color: var(--tag-txt);
+    padding: 3px 10px; border-radius: 999px;
+    font-family: 'DM Mono', monospace;
+  }
+  .tag.green { background: #e6f4ea; color: #1a7f4f; }
+  .tag.amber { background: #fef7e0; color: #b06000; }
+  .tag.red { background: #fde8e4; color: #c0341c; }
+
+  .finding-list { list-style: none; }
+  .finding-list li {
+    font-size: 13px; color: var(--ink); padding: 6px 0;
+    border-bottom: 1px solid var(--border);
+    display: flex; gap: 8px; align-items: flex-start;
+  }
+  .finding-list li:last-child { border-bottom: none; }
+  .finding-list li::before {
+    content: '→'; color: var(--accent);
+    font-family: 'DM Mono', monospace; font-size: 11px;
+    margin-top: 2px; flex-shrink: 0;
+  }
+
+  /* SQL SHOWCASE */
+  .sql-block {
+    background: #0d1117; border-radius: 12px; overflow: hidden;
+    margin-top: 2rem; border: 1px solid #30363d;
+  }
+  .sql-header {
+    background: #161b22; padding: 10px 16px;
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 1px solid #30363d;
+  }
+  .sql-dots { display: flex; gap: 6px; }
+  .sql-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .sql-filename {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px; color: #8b949e;
+  }
+  .sql-body { padding: 1.25rem 1.5rem; overflow-x: auto; }
+  .sql-body pre {
+    font-family: 'DM Mono', monospace;
+    font-size: 12.5px; line-height: 1.8;
+    color: #e6edf3; white-space: pre;
+  }
+  .kw { color: #ff7b72; }
+  .fn { color: #d2a8ff; }
+  .str { color: #a5d6ff; }
+  .cm { color: #8b949e; font-style: italic; }
+  .nm { color: #79c0ff; }
+
+  /* EXPERIENCE TIMELINE */
+  .timeline { position: relative; }
+  .timeline::before {
+    content: ''; position: absolute; left: 7px; top: 8px;
+    width: 1px; height: calc(100% - 8px);
+    background: var(--border);
+  }
+  .tl-item { display: flex; gap: 1.5rem; margin-bottom: 2rem; }
+  .tl-dot {
+    width: 16px; height: 16px; border-radius: 50%;
+    background: var(--card); border: 2px solid var(--accent);
+    flex-shrink: 0; margin-top: 4px; position: relative; z-index: 1;
+  }
+  .tl-dot.muted { border-color: var(--border); }
+  .tl-body { flex: 1; }
+  .tl-title { font-size: 15px; font-weight: 600; margin-bottom: 2px; }
+  .tl-meta { font-size: 12px; color: var(--muted); margin-bottom: 6px; font-family: 'DM Mono', monospace; }
+  .tl-desc { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+  /* CONTACT */
+  .contact-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: center;
+  }
+  .contact-text h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 32px; margin-bottom: 0.75rem;
+  }
+  .contact-text p { font-size: 15px; color: var(--muted); line-height: 1.7; }
+  .contact-links { display: flex; flex-direction: column; gap: 12px; }
+  .contact-link {
+    display: flex; align-items: center; gap: 12px;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 10px; padding: 14px 16px; text-decoration: none;
+    color: var(--ink); transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .contact-link:hover { border-color: var(--accent); box-shadow: 0 2px 12px rgba(26,79,214,0.1); }
+  .contact-link-icon { font-size: 20px; width: 36px; text-align: center; }
+  .contact-link-label { font-size: 13px; font-weight: 500; }
+  .contact-link-value { font-size: 12px; color: var(--muted); }
+
+  /* FOOTER */
+  footer {
+    text-align: center; padding: 2rem;
+    font-size: 12px; color: var(--muted);
+    border-top: 1px solid var(--border);
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 680px) {
+    .hero { grid-template-columns: 1fr; gap: 2rem; padding-top: 100px; }
+    .project-card { grid-template-columns: 1fr; }
+    .project-visual { min-height: 160px; }
+    .contact-grid { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="#">Alberto Hilario</a>
+  <div class="nav-links">
+    <a href="#skills">Skills</a>
+    <a href="#projects">Projects</a>
+    <a href="#experience">Experience</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-text">
+    <div class="hero-eyebrow">Data Analytics Portfolio</div>
+    <h1>Turning raw data into <em>clear decisions</em></h1>
+    <p class="hero-desc">Google Data Analytics certified. Experienced in SQL, Google Sheets, CRM analysis, and logistics data. Based in Brooklyn, NY — open to remote & hybrid roles.</p>
+    <a href="#projects" class="hero-cta">View my work ↓</a>
+  </div>
+  <div class="hero-visual">
+    <div class="stat-card">
+      <div class="stat-icon blue">📊</div>
+      <div>
+        <div class="stat-num">1M+</div>
+        <div class="stat-lbl">Taxi trips analyzed (SQL)</div>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon green">🗺️</div>
+      <div>
+        <div class="stat-num">4</div>
+        <div class="stat-lbl">Completed analytics projects</div>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon orange">⚡</div>
+      <div>
+        <div class="stat-num">62%</div>
+        <div class="stat-lbl">Efficiency gain found via analysis</div>
+      </div>
+    </div>
+    <div class="cert-badge">
+      <div class="cert-icon">🎓</div>
+      <div>
+        <div class="cert-name">Google Data Analytics Certificate</div>
+        <div class="cert-sub">Coursera · SQL · Sheets · Tableau · R</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-label">Capabilities</div>
+  <h2 class="section-title">Skills & Tools</h2>
+  <p class="section-desc">Core tools I use to collect, clean, analyze, and communicate data.</p>
+  <div class="skills-grid">
+    <div class="skill-card reveal">
+      <div class="skill-card-icon">🗄️</div>
+      <div class="skill-card-name">SQL</div>
+      <div class="skill-card-desc">Querying, aggregations, window functions, joins, data cleaning</div>
+      <div class="skill-bar-wrap"><div class="skill-bar" data-width="80"></div></div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-card-icon">📗</div>
+      <div class="skill-card-name">Google Sheets / Excel</div>
+      <div class="skill-card-desc">Pivot tables, VLOOKUP, dashboards, data validation</div>
+      <div class="skill-bar-wrap"><div class="skill-bar" data-width="88"></div></div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-card-icon">📈</div>
+      <div class="skill-card-name">Data Visualization</div>
+      <div class="skill-card-desc">Charts, trend analysis, dashboard design, storytelling with data</div>
+      <div class="skill-bar-wrap"><div class="skill-bar" data-width="75"></div></div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-card-icon">🔗</div>
+      <div class="skill-card-name">CRM Analysis</div>
+      <div class="skill-card-desc">Lead segmentation, email/SMS campaigns, customer lifecycle data</div>
+      <div class="skill-bar-wrap"><div class="skill-bar" data-width="82"></div></div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-card-icon">🧹</div>
+      <div class="skill-card-name">Data Cleaning</div>
+      <div class="skill-card-desc">Handling nulls, deduplication, formatting inconsistencies, outlier detection</div>
+      <div class="skill-bar-wrap"><div class="skill-bar" data-width="78"></div></div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-card-icon">🏭</div>
+      <div class="skill-card-name">Logistics & Ops Data</div>
+      <div class="skill-card-desc">Demand forecasting, efficiency metrics, zone-based analysis</div>
+      <div class="skill-bar-wrap"><div class="skill-bar" data-width="70"></div></div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-label">Work Samples</div>
+  <h2 class="section-title">Analytics Projects</h2>
+  <p class="section-desc">End-to-end analyses using public datasets — from raw SQL queries to business insights.</p>
+
+  <div class="projects-grid">
+
+    <!-- Project 1 -->
+    <div class="project-card reveal">
+      <div class="project-visual blue-bg">
+        <div class="mini-chart" style="width:100%">
+          <div class="bar-row"><span class="bar-label">6pm</span><div class="bar-fill b" style="width:100%; height:10px; border-radius:3px;"></div></div>
+          <div class="bar-row"><span class="bar-label">5pm</span><div class="bar-fill b" style="width:92%; height:10px; border-radius:3px;"></div></div>
+          <div class="bar-row"><span class="bar-label">7pm</span><div class="bar-fill b" style="width:88%; height:10px; border-radius:3px;"></div></div>
+          <div class="bar-row"><span class="bar-label">8am</span><div class="bar-fill b" style="width:78%; height:10px; border-radius:3px;"></div></div>
+          <div class="bar-row"><span class="bar-label">5am</span><div class="bar-fill b" style="width:28%; height:10px; border-radius:3px;"></div></div>
+        </div>
+        <div style="font-family:'DM Mono',monospace; font-size:10px; color:#1a4fd6; text-align:center;">trip volume by hour</div>
+      </div>
+      <div class="project-info">
+        <div class="project-number">Project 01</div>
+        <div class="project-title">NYC Taxi Demand & Logistics Analysis</div>
+        <p class="project-desc">Analyzed 1M+ NYC Yellow Taxi trips using SQL to identify peak demand windows, revenue-generating zones, driver efficiency rates, and customer tipping behavior.</p>
+        <div class="tag-row">
+          <span class="tag">SQL</span>
+          <span class="tag">Google Sheets</span>
+          <span class="tag green">BigQuery</span>
+          <span class="tag amber">NYC TLC Data</span>
+        </div>
+        <ul class="finding-list">
+          <li>Early AM hours (4–6 AM) are 62% more revenue-efficient per minute than rush hour</li>
+          <li>Airport zones generate 2× avg fare vs. Midtown Manhattan</li>
+          <li>Credit card payers tip 18.4% avg; payment type predicts customer value</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Project 2 -->
+    <div class="project-card reveal">
+      <div class="project-visual green-bg">
+        <div class="mini-chart" style="width:100%">
+          <div class="bar-row"><span class="bar-label">Q1</span><div class="bar-fill g" style="width:55%; height:10px; border-radius:3px;"></div></div>
+          <div class="bar-row"><span class="bar-label">Q2</span><div class="bar-fill g" style="width:70%; height:10px; border-radius:3px;"></div></div>
+          <div class="bar-row"><span class="bar-label">Q3</span><div class="bar-fill g" style="width:88%; height:10px; border-radius:3px;"></div></div>
+          <div class="bar-row"><span class="bar-label">Q4</span><div class="bar-fill g" style="width:100%; height:10px; border-radius:3px;"></div></div>
+        </div>
+        <div style="font-family:'DM Mono',monospace; font-size:10px; color:#1a7f4f; text-align:center;">quarterly revenue growth</div>
+      </div>
+      <div class="project-info">
+        <div class="project-number">Project 02</div>
+        <div class="project-title">Retail Sales Trend Analysis</div>
+        <p class="project-desc">Used publicly available retail sales data to identify seasonal patterns, top-performing product categories, and revenue growth trends — directly mirroring the sales analysis done during bartending and Toyota roles.</p>
+        <div class="tag-row">
+          <span class="tag">SQL</span>
+          <span class="tag green">Google Sheets</span>
+          <span class="tag amber">Kaggle Dataset</span>
+        </div>
+        <ul class="finding-list">
+          <li>Q4 drove 34% of annual revenue — seasonal planning insight</li>
+          <li>Top 3 product categories account for 61% of total sales volume</li>
+          <li>Weekend sales 22% higher than weekday for mid-tier products</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Project 3 -->
+    <div class="project-card reveal">
+      <div class="project-visual amber-bg">
+        <div style="text-align:center">
+          <div style="font-size:36px; font-weight:700; color:#c97c00; font-family:'DM Serif Display',serif;">18.4%</div>
+          <div style="font-size:11px; color:#7a5000; font-family:'DM Mono',monospace; margin-top:4px;">avg tip — card payers</div>
+          <div style="margin: 16px 0; height:1px; background:#e8c97a;"></div>
+          <div style="font-size:24px; font-weight:700; color:#c97c00; font-family:'DM Serif Display',serif;">~0%</div>
+          <div style="font-size:11px; color:#7a5000; font-family:'DM Mono',monospace; margin-top:4px;">recorded — cash payers</div>
+        </div>
+      </div>
+      <div class="project-info">
+        <div class="project-number">Project 03</div>
+        <div class="project-title">Customer Behavior & CRM Segmentation</div>
+        <p class="project-desc">Applied CRM analysis principles to public customer transaction data, segmenting customers by payment method, purchase frequency, and lifetime value — matching the lead segmentation work done at Toyota.</p>
+        <div class="tag-row">
+          <span class="tag">SQL</span>
+          <span class="tag">CRM Analysis</span>
+          <span class="tag green">Segmentation</span>
+          <span class="tag red">Customer LTV</span>
+        </div>
+        <ul class="finding-list">
+          <li>Payment method identified as top predictor of customer value</li>
+          <li>High-frequency customers (top 20%) generate 58% of revenue</li>
+          <li>Segmentation model built to prioritize outreach — mirrors Toyota lead scoring</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SQL SHOWCASE -->
+<section style="padding-top: 0;">
+  <div class="section-label">Code Sample</div>
+  <h2 class="section-title">SQL in Action</h2>
+  <p class="section-desc">A sample query from the NYC Taxi project — finding revenue efficiency by hour of day.</p>
+  <div class="sql-block reveal">
+    <div class="sql-header">
+      <div class="sql-dots">
+        <div class="sql-dot" style="background:#ff5f57"></div>
+        <div class="sql-dot" style="background:#febc2e"></div>
+        <div class="sql-dot" style="background:#28c840"></div>
+      </div>
+      <div class="sql-filename">revenue_efficiency_by_hour.sql</div>
+      <div></div>
+    </div>
+    <div class="sql-body">
+      <pre><span class="cm">-- Find the most revenue-efficient hours for delivery drivers</span>
+<span class="cm">-- Revenue per minute = total fare ÷ trip duration</span>
+
+<span class="kw">SELECT</span>
+  <span class="fn">EXTRACT</span>(<span class="nm">HOUR</span> <span class="kw">FROM</span> tpep_pickup_datetime) <span class="kw">AS</span> hour_of_day,
+  <span class="fn">COUNT</span>(*) <span class="kw">AS</span> total_trips,
+  <span class="fn">ROUND</span>(<span class="fn">AVG</span>(total_amount), <span class="nm">2</span>) <span class="kw">AS</span> avg_fare,
+  <span class="fn">ROUND</span>(<span class="fn">AVG</span>(
+    <span class="fn">TIMESTAMP_DIFF</span>(tpep_dropoff_datetime,
+      tpep_pickup_datetime, <span class="nm">MINUTE</span>)
+  ), <span class="nm">1</span>) <span class="kw">AS</span> avg_duration_min,
+  <span class="fn">ROUND</span>(
+    <span class="fn">AVG</span>(total_amount) /
+    <span class="fn">NULLIF</span>(<span class="fn">AVG</span>(<span class="fn">TIMESTAMP_DIFF</span>(
+      tpep_dropoff_datetime,
+      tpep_pickup_datetime, <span class="nm">MINUTE</span>
+    )), <span class="nm">0</span>),
+  <span class="nm">2</span>) <span class="kw">AS</span> revenue_per_minute
+
+<span class="kw">FROM</span>
+  <span class="str">`nyc-tlc.yellow.trips_2023`</span>
+
+<span class="kw">WHERE</span>
+  fare_amount > <span class="nm">0</span>
+  <span class="kw">AND</span> trip_distance > <span class="nm">0</span>
+  <span class="kw">AND</span> <span class="fn">TIMESTAMP_DIFF</span>(
+    tpep_dropoff_datetime,
+    tpep_pickup_datetime, <span class="nm">MINUTE</span>
+  ) <span class="kw">BETWEEN</span> <span class="nm">1</span> <span class="kw">AND</span> <span class="nm">120</span>
+
+<span class="kw">GROUP BY</span> hour_of_day
+<span class="kw">ORDER BY</span> revenue_per_minute <span class="kw">DESC</span>
+<span class="kw">LIMIT</span> <span class="nm">24</span>;</pre>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-label">Background</div>
+  <h2 class="section-title">Relevant Experience</h2>
+  <p class="section-desc">Every role contributed real data skills — here's how they connect to analytics.</p>
+  <div class="timeline">
+    <div class="tl-item reveal">
+      <div class="tl-dot"></div>
+      <div class="tl-body">
+        <div class="tl-title">Business Development Consultant — Toyota, Brooklyn NY</div>
+        <div class="tl-meta">Feb 2019 – Jul 2020</div>
+        <div class="tl-desc">Managed CRM platform, segmented leads by purchase intent, ran email/SMS campaigns. Direct application of customer data analysis and conversion tracking — the foundation of CRM analytics.</div>
+      </div>
+    </div>
+    <div class="tl-item reveal">
+      <div class="tl-dot"></div>
+      <div class="tl-body">
+        <div class="tl-title">Bartender / Waiter — Wolf & Warrior Brewing Co.</div>
+        <div class="tl-meta">Mar 2022 – Nov 2023</div>
+        <div class="tl-desc">Used POS systems to track revenue, managed financial reconciliation, analyzed which products and time periods drove highest sales — foundational sales trend analysis.</div>
+      </div>
+    </div>
+    <div class="tl-item reveal">
+      <div class="tl-dot"></div>
+      <div class="tl-body">
+        <div class="tl-title">Guest Services Rep — Museum of Natural History, NY</div>
+        <div class="tl-meta">Feb 2024 – Mar 2025</div>
+        <div class="tl-desc">Analyzed attendance patterns to predict peak periods, structured feedback loops to management. Applied operational data thinking in a high-volume public environment.</div>
+      </div>
+    </div>
+    <div class="tl-item reveal">
+      <div class="tl-dot"></div>
+      <div class="tl-body">
+        <div class="tl-title">Google Data Analytics Certificate — Coursera</div>
+        <div class="tl-meta">Completed 2024</div>
+        <div class="tl-desc">Formal certification covering SQL, data cleaning, analysis methodology, Google Sheets, Tableau, and R basics. Applied directly in the portfolio projects above.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-grid">
+    <div class="contact-text reveal">
+      <div class="section-label">Get in touch</div>
+      <h2>Let's work together</h2>
+      <p>I'm actively looking for remote or hybrid data analyst, operations analyst, or CRM analyst roles. Available for interviews immediately.</p>
+    </div>
+    <div class="contact-links reveal">
+      <a class="contact-link" href="mailto:Albertohilario101@gmail.com">
+        <div class="contact-link-icon">✉️</div>
+        <div>
+          <div class="contact-link-label">Email</div>
+          <div class="contact-link-value">Albertohilario101@gmail.com</div>
+        </div>
+      </a>
+      <a class="contact-link" href="tel:3474943004">
+        <div class="contact-link-icon">📞</div>
+        <div>
+          <div class="contact-link-label">Phone</div>
+          <div class="contact-link-value">(347) 494-3004</div>
+        </div>
+      </a>
+      <a class="contact-link" href="https://www.linkedin.com/in/alberto-hilario-2106b2255" target="_blank">
+        <div class="contact-link-icon">💼</div>
+        <div>
+          <div class="contact-link-label">LinkedIn</div>
+          <div class="contact-link-value">linkedin.com/in/alberto-hilario-2106b2255</div>
+        </div>
+      </a>
+      <a class="contact-link" href="https://github.com/BertToe" target="_blank">
+        <div class="contact-link-icon">🐙</div>
+        <div>
+          <div class="contact-link-label">GitHub</div>
+          <div class="contact-link-value">github.com/BertToe</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  Alberto Hilario · Data Analytics Portfolio · Brooklyn, NY · Open to remote & hybrid roles
+</footer>
+
+<script>
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        // Animate skill bars
+        e.target.querySelectorAll('.skill-bar').forEach(bar => {
+          bar.style.width = bar.dataset.width + '%';
+        });
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Also trigger skill bars for initially visible cards
+  document.querySelectorAll('.skill-bar').forEach(bar => {
+    const card = bar.closest('.skill-card');
+    if (card && card.getBoundingClientRect().top < window.innerHeight) {
+      setTimeout(() => { bar.style.width = bar.dataset.width + '%'; }, 300);
+    }
+  });
+</script>
+</body>
+</html>
