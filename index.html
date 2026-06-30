@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Alberto Hilario — Data Analytics Portfolio</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f9f9f7;
+      --surface: #ffffff;
+      --text: #1a1a18;
+      --muted: #6b6b67;
+      --border: #e2e2de;
+      --accent: #2563eb;
+      --accent-light: #eff6ff;
+      --tag-bg: #f1f0ec;
+      --tag-text: #3d3d3a;
+      --radius: 10px;
+      --max: 780px;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      font-size: 16px;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* NAV */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(249,249,247,0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 56px;
+    }
+    .nav-logo { font-weight: 600; font-size: 15px; color: var(--text); }
+    .nav-links { display: flex; gap: 1.5rem; }
+    .nav-links a { font-size: 14px; color: var(--muted); }
+    .nav-links a:hover { color: var(--text); text-decoration: none; }
+
+    /* LAYOUT */
+    .container { max-width: var(--max); margin: 0 auto; padding: 0 2rem; }
+
+    section { padding: 5rem 0; border-bottom: 1px solid var(--border); }
+    section:last-of-type { border-bottom: none; }
+
+    .section-label {
+      font-size: 11px; font-weight: 600; letter-spacing: .08em;
+      text-transform: uppercase; color: var(--muted);
+      margin-bottom: .5rem;
+    }
+
+    h1 { font-size: clamp(2rem, 5vw, 3rem); font-weight: 700; line-height: 1.2; margin-bottom: 1.25rem; }
+    h2 { font-size: 1.5rem; font-weight: 600; margin-bottom: .5rem; }
+    h3 { font-size: 1rem; font-weight: 600; margin-bottom: .25rem; }
+    em { font-style: italic; }
+
+    .section-sub { color: var(--muted); margin-bottom: 2.5rem; font-size: 15px; }
+
+    /* HERO */
+    #hero { padding: 6rem 0 5rem; border-bottom: 1px solid var(--border); }
+    #hero .eyebrow { font-size: 13px; color: var(--muted); margin-bottom: 1rem; letter-spacing: .03em; }
+    #hero p { font-size: 1.1rem; color: var(--muted); max-width: 520px; margin-bottom: 2rem; line-height: 1.7; }
+    .cta-btn {
+      display: inline-block;
+      background: var(--accent); color: #fff;
+      padding: .6rem 1.4rem; border-radius: var(--radius);
+      font-size: 14px; font-weight: 500;
+      transition: opacity .15s;
+    }
+    .cta-btn:hover { opacity: .85; text-decoration: none; }
+
+    /* STATS */
+    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; margin-top: 3rem; }
+    .stat-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.25rem 1rem;
+    }
+    .stat-icon { font-size: 1.4rem; margin-bottom: .5rem; }
+    .stat-num { font-size: 1.5rem; font-weight: 700; line-height: 1; margin-bottom: .25rem; }
+    .stat-label { font-size: 12px; color: var(--muted); }
+
+    /* SKILLS */
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
+    .skill-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.25rem;
+    }
+    .skill-icon { font-size: 1.4rem; margin-bottom: .6rem; }
+    .skill-title { font-weight: 600; font-size: 14px; margin-bottom: .3rem; }
+    .skill-desc { font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+    /* PROJECTS */
+    .project-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.75rem;
+      margin-bottom: 1.25rem;
+    }
+    .project-meta { display: flex; align-items: center; gap: .75rem; margin-bottom: 1rem; }
+    .project-num { font-size: 11px; font-weight: 600; color: var(--muted); letter-spacing: .06em; text-transform: uppercase; }
+    .project-title { font-size: 1.05rem; font-weight: 600; margin-bottom: .5rem; }
+    .project-desc { font-size: 14px; color: var(--muted); margin-bottom: 1rem; line-height: 1.6; }
+    .tags { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: 1rem; }
+    .tag {
+      background: var(--tag-bg); color: var(--tag-text);
+      font-size: 11px; font-weight: 500; padding: .2rem .6rem;
+      border-radius: 4px; letter-spacing: .02em;
+    }
+    .project-findings { list-style: none; padding: 0; }
+    .project-findings li {
+      font-size: 13px; color: var(--muted); padding: .3rem 0;
+      padding-left: 1rem; position: relative;
+    }
+    .project-findings li::before {
+      content: '→'; position: absolute; left: 0;
+      color: var(--accent); font-size: 12px;
+    }
+
+    /* MINI VIZ */
+    .mini-viz {
+      background: var(--bg); border-radius: 8px;
+      padding: 1rem; margin-bottom: 1rem;
+      font-size: 12px; color: var(--muted);
+      display: flex; align-items: flex-end; gap: 6px; height: 80px;
+    }
+    .bar { background: var(--accent); border-radius: 3px 3px 0 0; flex: 1; opacity: .7; position: relative; }
+    .bar.hi { opacity: 1; }
+    .bar-label { font-size: 10px; color: var(--muted); text-align: center; margin-top: 4px; }
+    .mini-bar-wrap { display: flex; flex-direction: column; flex: 1; align-items: center; }
+
+    /* SQL */
+    pre {
+      background: #1e1e2e; color: #cdd6f4;
+      border-radius: var(--radius); padding: 1.5rem;
+      font-size: 13px; overflow-x: auto; line-height: 1.6;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+    }
+    .code-label {
+      font-size: 12px; color: var(--muted); font-family: monospace;
+      margin-bottom: .5rem;
+    }
+
+    /* EXPERIENCE */
+    .exp-item { margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+    .exp-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+    .exp-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; margin-bottom: .4rem; flex-wrap: wrap; }
+    .exp-title { font-weight: 600; font-size: 15px; }
+    .exp-date { font-size: 13px; color: var(--muted); white-space: nowrap; }
+    .exp-item p { font-size: 14px; color: var(--muted); line-height: 1.6; }
+    .exp-item ul { list-style: none; padding: 0; margin-top: .25rem; }
+    .exp-item ul li {
+      font-size: 14px; color: var(--muted); line-height: 1.6;
+      padding-left: 1rem; position: relative; margin-bottom: .35rem;
+    }
+    .exp-item ul li::before { content: '→'; position: absolute; left: 0; color: var(--accent); font-size: 12px; top: 3px; }
+
+    /* CONTACT */
+    .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1.5rem; }
+    .contact-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1rem 1.25rem;
+      font-size: 14px;
+    }
+    .contact-card .c-label { font-size: 11px; color: var(--muted); margin-bottom: .3rem; text-transform: uppercase; letter-spacing: .06em; font-weight: 600; }
+    .contact-card a { color: var(--text); font-weight: 500; word-break: break-all; }
+    .contact-card a:hover { color: var(--accent); }
+
+    /* FOOTER */
+    footer { padding: 2rem; text-align: center; font-size: 13px; color: var(--muted); border-top: 1px solid var(--border); }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo">Alberto Hilario</a>
+  <div class="nav-links">
+    <a href="#skills">Skills</a>
+    <a href="#projects">Projects</a>
+    <a href="#experience">Experience</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="container">
+    <p class="eyebrow">Data Analytics Portfolio</p>
+    <h1>Turning raw data into <em>clear decisions</em></h1>
+    <p>Google Data Analytics certified. Experienced in SQL, Google Sheets, CRM analysis, and logistics data. Based in Brooklyn, NY — open to remote &amp; hybrid roles.</p>
+    <a href="#projects" class="cta-btn">View my work ↓</a>
+
+    <div class="stats">
+      <div class="stat-card">
+        <div class="stat-icon">📊</div>
+        <div class="stat-num">1M+</div>
+        <div class="stat-label">Taxi trips analyzed (SQL)</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">🗺️</div>
+        <div class="stat-num">4</div>
+        <div class="stat-label">Completed analytics projects</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">⚡</div>
+        <div class="stat-num">62%</div>
+        <div class="stat-label">Efficiency gain found via analysis</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">🎓</div>
+        <div class="stat-num" style="font-size:1rem;">Google Data Analytics Certificate</div>
+        <div class="stat-label">Coursera · SQL · Sheets · Tableau · R</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="container">
+    <div class="section-label">Capabilities</div>
+    <h2>Skills &amp; Tools</h2>
+    <p class="section-sub">Core tools I use to collect, clean, analyze, and communicate data.</p>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <div class="skill-icon">🗄️</div>
+        <div class="skill-title">SQL</div>
+        <div class="skill-desc">Querying, aggregations, window functions, joins, data cleaning</div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">📗</div>
+        <div class="skill-title">Google Sheets / Excel</div>
+        <div class="skill-desc">Pivot tables, VLOOKUP, dashboards, data validation</div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">📈</div>
+        <div class="skill-title">Data Visualization</div>
+        <div class="skill-desc">Charts, trend analysis, dashboard design, storytelling with data</div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">🔗</div>
+        <div class="skill-title">CRM Analysis</div>
+        <div class="skill-desc">Lead segmentation, email/SMS campaigns, customer lifecycle data</div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">🧹</div>
+        <div class="skill-title">Data Cleaning</div>
+        <div class="skill-desc">Handling nulls, deduplication, formatting inconsistencies, outlier detection</div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">🏭</div>
+        <div class="skill-title">Logistics &amp; Ops Data</div>
+        <div class="skill-desc">Demand forecasting, efficiency metrics, zone-based analysis</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="container">
+    <div class="section-label">Work Samples</div>
+    <h2>Analytics Projects</h2>
+    <p class="section-sub">End-to-end analyses using public datasets — from raw SQL queries to business insights.</p>
+
+    <div class="project-card">
+      <div class="project-meta"><span class="project-num">Project 01</span></div>
+      <div class="project-title">NYC Taxi Demand &amp; Logistics Analysis</div>
+      <div class="project-desc">Analyzed 1M+ NYC Yellow Taxi trips using SQL to identify peak demand windows, revenue-generating zones, driver efficiency rates, and customer tipping behavior.</div>
+      <div class="tags">
+        <span class="tag">SQL</span><span class="tag">Google Sheets</span><span class="tag">BigQuery</span><span class="tag">NYC TLC Data</span>
+      </div>
+      <ul class="project-findings">
+        <li>Early AM hours (4–6 AM) are 62% more revenue-efficient per minute than rush hour</li>
+        <li>Airport zones generate 2× avg fare vs. Midtown Manhattan</li>
+        <li>Credit card payers tip 18.4% avg; payment type predicts customer value</li>
+      </ul>
+    </div>
+
+    <div class="project-card">
+      <div class="project-meta"><span class="project-num">Project 02</span></div>
+      <div class="project-title">Retail Sales Trend Analysis</div>
+      <div class="project-desc">Used publicly available retail sales data to identify seasonal patterns, top-performing product categories, and revenue growth trends — directly mirroring the sales analysis done during bartending and Toyota roles.</div>
+      <div class="tags">
+        <span class="tag">SQL</span><span class="tag">Google Sheets</span><span class="tag">Kaggle Dataset</span>
+      </div>
+      <ul class="project-findings">
+        <li>Q4 drove 34% of annual revenue — seasonal planning insight</li>
+        <li>Top 3 product categories account for 61% of total sales volume</li>
+        <li>Weekend sales 22% higher than weekday for mid-tier products</li>
+      </ul>
+    </div>
+
+    <div class="project-card">
+      <div class="project-meta"><span class="project-num">Project 03</span></div>
+      <div class="project-title">Customer Behavior &amp; CRM Segmentation</div>
+      <div class="project-desc">Applied CRM analysis principles to public customer transaction data, segmenting customers by payment method, purchase frequency, and lifetime value — matching the lead segmentation work done at Toyota.</div>
+      <div class="tags">
+        <span class="tag">SQL</span><span class="tag">CRM Analysis</span><span class="tag">Segmentation</span><span class="tag">Customer LTV</span>
+      </div>
+      <ul class="project-findings">
+        <li>Payment method identified as top predictor of customer value</li>
+        <li>High-frequency customers (top 20%) generate 58% of revenue</li>
+        <li>Segmentation model built to prioritize outreach — mirrors Toyota lead scoring</li>
+      </ul>
+    </div>
+
+    <!-- SQL -->
+    <div class="section-label" style="margin-top:3rem;">Code Sample</div>
+    <h2 style="margin-bottom:.5rem;">SQL in Action</h2>
+    <p class="section-sub">A sample query from the NYC Taxi project — finding revenue efficiency by hour of day.</p>
+    <div class="code-label">revenue_efficiency_by_hour.sql</div>
+    <pre>-- Find the most revenue-efficient hours for delivery drivers
+-- Revenue per minute = total fare ÷ trip duration
+
+SELECT
+  EXTRACT(HOUR FROM tpep_pickup_datetime) AS hour_of_day,
+  COUNT(*) AS total_trips,
+  ROUND(AVG(total_amount), 2) AS avg_fare,
+  ROUND(AVG(
+    TIMESTAMP_DIFF(tpep_dropoff_datetime,
+      tpep_pickup_datetime, MINUTE)
+  ), 1) AS avg_duration_min,
+  ROUND(
+    AVG(total_amount) /
+    NULLIF(AVG(TIMESTAMP_DIFF(
+      tpep_dropoff_datetime,
+      tpep_pickup_datetime, MINUTE
+    )), 0),
+  2) AS revenue_per_minute
+
+FROM
+  `nyc-tlc.yellow.trips_2023`
+
+WHERE
+  fare_amount > 0
+  AND trip_distance > 0
+  AND TIMESTAMP_DIFF(
+    tpep_dropoff_datetime,
+    tpep_pickup_datetime, MINUTE
+  ) BETWEEN 1 AND 120
+
+GROUP BY hour_of_day
+ORDER BY revenue_per_minute DESC
+LIMIT 24;</pre>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="container">
+    <div class="section-label">Background</div>
+    <h2>Relevant Experience</h2>
+    <p class="section-sub">Every role contributed real data skills — here's how they connect to analytics.</p>
+
+    <div class="exp-item">
+      <div class="exp-header">
+        <span class="exp-title">Operations Leader — Petco</span>
+        <span class="exp-date">2026 – Present</span>
+      </div>
+      <ul>
+        <li>Supervised 8 store partners per shift and managed 200+ daily customer interactions, ensuring consistent operational standards and a smooth store environment</li>
+        <li>Resolved customer concerns on the floor in real time, supporting service levels consistent with retail industry benchmarks for 15–20% operational efficiency gains</li>
+        <li>Executed daily open/close procedures, cash handling, inventory cycle counts, and merchandising resets — reinforcing shrink controls aligned with industry standards reducing inventory loss by up to 23%</li>
+      </ul>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-header">
+        <span class="exp-title">Business Development Consultant — Toyota, Brooklyn NY</span>
+        <span class="exp-date">Feb 2019 – Jul 2020</span>
+      </div>
+      <p>Managed CRM platform, segmented leads by purchase intent, ran email/SMS campaigns. Direct application of customer data analysis and conversion tracking — the foundation of CRM analytics.</p>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-header">
+        <span class="exp-title">Bartender / Waiter — Wolf &amp; Warrior Brewing Co.</span>
+        <span class="exp-date">Mar 2022 – Nov 2023</span>
+      </div>
+      <p>Used POS systems to track revenue, managed financial reconciliation, analyzed which products and time periods drove highest sales — foundational sales trend analysis.</p>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-header">
+        <span class="exp-title">Guest Services Rep — Museum of Natural History, NY</span>
+        <span class="exp-date">Feb 2024 – Mar 2025</span>
+      </div>
+      <p>Analyzed attendance patterns to predict peak periods, structured feedback loops to management. Applied operational data thinking in a high-volume public environment.</p>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-header">
+        <span class="exp-title">Google Data Analytics Certificate — Coursera</span>
+        <span class="exp-date">Completed 2024</span>
+      </div>
+      <p>Formal certification covering SQL, data cleaning, analysis methodology, Google Sheets, Tableau, and R basics. Applied directly in the portfolio projects above.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="section-label">Get in touch</div>
+    <h2>Let's work together</h2>
+    <p class="section-sub">I'm actively looking for remote or hybrid data analyst, operations analyst, or CRM analyst roles. Available for interviews immediately.</p>
+    <div class="contact-grid">
+      <div class="contact-card">
+        <div class="c-label">✉️ Email</div>
+        <a href="mailto:albertohilario101@gmail.com">albertohilario101@gmail.com</a>
+      </div>
+      <div class="contact-card">
+        <div class="c-label">📞 Phone</div>
+        <a href="tel:3474943004">(347) 494-3004</a>
+      </div>
+      <div class="contact-card">
+        <div class="c-label">💼 LinkedIn</div>
+        <a href="https://www.linkedin.com/in/alberto-hilario-2106b2255" target="_blank">linkedin.com/in/alberto-hilario-2106b2255</a>
+      </div>
+      <div class="contact-card">
+        <div class="c-label">🐙 GitHub</div>
+        <a href="https://github.com/BertToe" target="_blank">github.com/BertToe</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  Alberto Hilario · Data Analytics Portfolio · Brooklyn, NY · Open to remote &amp; hybrid roles
+</footer>
+
+</body>
+</html>
